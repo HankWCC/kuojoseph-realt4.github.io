@@ -6745,7 +6745,9 @@ let bloomComposer, finalComposer, renderer, mixer, clock
 let controls
 let model
 let mesh
+let gPtMoved = false
 let pageNow = 0
+let slideNow = 0
 
 init()
 
@@ -6807,6 +6809,9 @@ function init () {
 
   controls = new OrbitControls(camera, renderer.domElement)
   controls.maxPolarAngle = Math.PI * 0.5
+  controls.minPolarAngle = Math.PI * 0.4
+  controls.maxAzimuthAngle = Math.PI * 0.1
+  controls.minAzimuthAngle = Math.PI * -0.1
 
   scene.add(new three_module/* AmbientLight */.Mig(0xf0f0f0))
 
@@ -6887,6 +6892,8 @@ function init () {
   window.addEventListener('load', onLoad)
   window.addEventListener('resize', onWindowResize)
   window.addEventListener('pointerup', onPointerUp)
+  window.addEventListener('pointerdown', onPointerDown)
+  window.addEventListener('pointermove', onPointerMove)
 
   animate()
 }
@@ -6897,6 +6904,8 @@ function pageWarRoom () {
   }
   // console.info('pageWarRoom')
   pageNow = 1
+  controls.reset()
+  // controls.enabled = false
   const manager = new three_module/* LoadingManager */.lLk(/*loadModel*/)
 
   // Not so practical:
@@ -6918,7 +6927,7 @@ function pageWarRoom () {
       .easing(TWEEN.Easing.Quartic.In)
       .onUpdate(() => {
         model.scale.copy(current)
-        model.position.y = model.position.y - 0.015
+        model.position.y -= current.y * 0.0175
       })
     // .onComplete(function () {
     //   console.info('\nTWEEN.onComplete\n')
@@ -6942,6 +6951,91 @@ function pageWarRoom () {
     // onProgress,  // not work for large GLTF
     // onLoad       // triggered on start
   )
+}
+
+function navSlides () {
+  // var current = camera.position
+  // TWEEN.removeAll()
+  // const dst = controls.target.clone().sub(direction)
+  // var current = { tz:camera.position.z, ry:camera.rotation.y }
+  // const dst = { tz:camera.position.z-0.2 , ry:camera.rotation.y + Math.PI *0.5 }
+  // var current = { x: 0 }
+  // const dst = { x: 1 }
+  if (0 == slideNow) {
+    var current = new three_module/* Vector3 */.Pa4(0, 0, 0)
+    current.applyQuaternion(camera.quaternion)
+    const dst = { x: 1, y: 0, z: 0 }
+
+    var tweenHead = new TWEEN.Tween(current)
+      // .to({ x: +800 }, 2500)
+      // .to(controls.target.sub(direction), 1500)
+      .to(dst, 1500)
+      // .delay(200)
+      // .easing(TWEEN.Easing['Elastic']['EaseInOut'])
+      .easing(TWEEN.Easing.Quartic.In)
+      .onUpdate(() => {
+        // camera.position.copy(current)
+        // camera.position.z = current.tz * 0.2
+        // camera.rotation.y = current.ry * Math.PI * 0.5
+        camera.lookAt(current)
+        camera.position.z = 5 - current.x * 4
+      })
+      .onComplete(function () {
+        // console.info('\nTWEEN.onComplete\n')
+        // controls.update()
+      })
+
+    tweenHead.start()
+    slideNow = 1
+  } else {
+    var current = new three_module/* Vector3 */.Pa4(0, 0, 0)
+    current.applyQuaternion(camera.quaternion)
+    const dst = { x: 0, y: 0, z: 0 }
+
+    var tweenHead = new TWEEN.Tween(current)
+      // .to({ x: +800 }, 2500)
+      // .to(controls.target.sub(direction), 1500)
+      .to(dst, 1500)
+      // .delay(200)
+      // .easing(TWEEN.Easing['Elastic']['EaseInOut'])
+      .easing(TWEEN.Easing.Quartic.In)
+      .onUpdate(() => {
+        // camera.position.copy(current)
+        // camera.position.z = current.tz * 0.2
+        // camera.rotation.y = current.ry * Math.PI * 0.5
+        camera.lookAt(current)
+        camera.position.z = 5 - current.x * 4
+      })
+      .onComplete(function () {
+        // console.info('\nTWEEN.onComplete\n')
+        // controls.update()
+      })
+
+    tweenHead.start()
+    slideNow = 0
+  }
+  // var currentP = new THREE.Vector3(0,0,0);
+  // const dstP = {x: 0, y: 1, z: 0}
+
+  // var tweenHeadP = new TWEEN.Tween(currentP)
+  //   // .to({ x: +800 }, 2500)
+  //   // .to(controls.target.sub(direction), 1500)
+  //   .to(dstP, 1500)
+  //   // .delay(200)
+  //   // .easing(TWEEN.Easing['Elastic']['EaseInOut'])
+  //   .easing(TWEEN.Easing.Quartic.In)
+  //   .onUpdate(()=>{
+  //     // camera.position.copy(current)
+  //     // camera.position.z = current.tz * 0.2
+  //     // camera.rotation.y = current.ry * Math.PI * 0.5
+  //     camera.position.copy(currentP)
+  //   })
+  //   .onComplete(function () {
+  //     // console.info('\nTWEEN.onComplete\n')
+  //     // controls.update()
+  //   })
+
+  // tweenHeadP.start()
 }
 
 function darkenNonBloomed (obj) {
@@ -6971,16 +7065,31 @@ function restoreMaterial (obj) {
 }
 
 function onPointerUp (event) {
-  const raycaster = new three_module/* Raycaster */.iMs()
-  const mouse = new three_module/* Vector2 */.FM8()
+  if (1 == pageNow) {
+    if (gPtMoved) {
+      return
+    }
+    navSlides()
+  } else {
+    const raycaster = new three_module/* Raycaster */.iMs()
+    const mouse = new three_module/* Vector2 */.FM8()
 
-  mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1
-  mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1
-  raycaster.setFromCamera(mouse, camera)
-  const intersects = raycaster.intersectObject(model)
-  if (intersects.length > 0) {
-    pageWarRoom()
+    mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1
+    mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1
+    raycaster.setFromCamera(mouse, camera)
+    const intersects = raycaster.intersectObject(model)
+    if (intersects.length > 0) {
+      pageWarRoom()
+    }
   }
+}
+
+function onPointerDown (event) {
+  gPtMoved = false
+}
+
+function onPointerMove (event) {
+  gPtMoved = true
 }
 
 function onLoad () {
