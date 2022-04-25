@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunkkuojoseph_realt4_github_io"] = self["webpackChunkkuojoseph_realt4_github_io"] || []).push([[143],{
 
-/***/ 629:
+/***/ 453:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 
@@ -1246,6 +1246,217 @@ class MapControls extends (/* unused pure expression or super */ null && (OrbitC
 
 		this.touches.ONE = TOUCH.PAN;
 		this.touches.TWO = TOUCH.DOLLY_ROTATE;
+
+	}
+
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/three/examples/jsm/renderers/CSS2DRenderer.js
+
+
+class CSS2DObject extends three_module/* Object3D */.Tme {
+
+	constructor( element = document.createElement( 'div' ) ) {
+
+		super();
+
+		this.element = element;
+
+		this.element.style.position = 'absolute';
+		this.element.style.userSelect = 'none';
+
+		this.element.setAttribute( 'draggable', false );
+
+		this.addEventListener( 'removed', function () {
+
+			this.traverse( function ( object ) {
+
+				if ( object.element instanceof Element && object.element.parentNode !== null ) {
+
+					object.element.parentNode.removeChild( object.element );
+
+				}
+
+			} );
+
+		} );
+
+	}
+
+	copy( source, recursive ) {
+
+		super.copy( source, recursive );
+
+		this.element = source.element.cloneNode( true );
+
+		return this;
+
+	}
+
+}
+
+CSS2DObject.prototype.isCSS2DObject = true;
+
+//
+
+const _vector = new three_module/* Vector3 */.Pa4();
+const _viewMatrix = new three_module/* Matrix4 */.yGw();
+const _viewProjectionMatrix = new three_module/* Matrix4 */.yGw();
+const _a = new three_module/* Vector3 */.Pa4();
+const _b = new three_module/* Vector3 */.Pa4();
+
+class CSS2DRenderer {
+
+	constructor( parameters = {} ) {
+
+		const _this = this;
+
+		let _width, _height;
+		let _widthHalf, _heightHalf;
+
+		const cache = {
+			objects: new WeakMap()
+		};
+
+		const domElement = parameters.element !== undefined ? parameters.element : document.createElement( 'div' );
+
+		domElement.style.overflow = 'hidden';
+
+		this.domElement = domElement;
+
+		this.getSize = function () {
+
+			return {
+				width: _width,
+				height: _height
+			};
+
+		};
+
+		this.render = function ( scene, camera ) {
+
+			if ( scene.autoUpdate === true ) scene.updateMatrixWorld();
+			if ( camera.parent === null ) camera.updateMatrixWorld();
+
+			_viewMatrix.copy( camera.matrixWorldInverse );
+			_viewProjectionMatrix.multiplyMatrices( camera.projectionMatrix, _viewMatrix );
+
+			renderObject( scene, scene, camera );
+			zOrder( scene );
+
+		};
+
+		this.setSize = function ( width, height ) {
+
+			_width = width;
+			_height = height;
+
+			_widthHalf = _width / 2;
+			_heightHalf = _height / 2;
+
+			domElement.style.width = width + 'px';
+			domElement.style.height = height + 'px';
+
+		};
+
+		function renderObject( object, scene, camera ) {
+
+			if ( object.isCSS2DObject ) {
+
+				const visible = object.visible && _vector.z >= - 1 && _vector.z <= 1 && object.layers.test( camera.layers );
+				object.element.style.display = visible ? '' : 'none';
+
+				if ( visible ) {
+
+					object.onBeforeRender( _this, scene, camera );
+
+					_vector.setFromMatrixPosition( object.matrixWorld );
+					_vector.applyMatrix4( _viewProjectionMatrix );
+
+					const element = object.element;
+
+					if ( /apple/i.test( navigator.vendor ) ) {
+
+						// https://github.com/mrdoob/three.js/issues/21415
+						element.style.transform = 'translate(-50%,-50%) translate(' + Math.round( _vector.x * _widthHalf + _widthHalf ) + 'px,' + Math.round( - _vector.y * _heightHalf + _heightHalf ) + 'px)';
+
+					} else {
+
+						element.style.transform = 'translate(-50%,-50%) translate(' + ( _vector.x * _widthHalf + _widthHalf ) + 'px,' + ( - _vector.y * _heightHalf + _heightHalf ) + 'px)';
+
+					}
+
+					const objectData = {
+						distanceToCameraSquared: getDistanceToSquared( camera, object )
+					};
+
+					cache.objects.set( object, objectData );
+
+					if ( element.parentNode !== domElement ) {
+
+						domElement.appendChild( element );
+
+					}
+
+					object.onAfterRender( _this, scene, camera );
+
+				}
+
+			}
+
+			for ( let i = 0, l = object.children.length; i < l; i ++ ) {
+
+				renderObject( object.children[ i ], scene, camera );
+
+			}
+
+		}
+
+		function getDistanceToSquared( object1, object2 ) {
+
+			_a.setFromMatrixPosition( object1.matrixWorld );
+			_b.setFromMatrixPosition( object2.matrixWorld );
+
+			return _a.distanceToSquared( _b );
+
+		}
+
+		function filterAndFlatten( scene ) {
+
+			const result = [];
+
+			scene.traverse( function ( object ) {
+
+				if ( object.isCSS2DObject ) result.push( object );
+
+			} );
+
+			return result;
+
+		}
+
+		function zOrder( scene ) {
+
+			const sorted = filterAndFlatten( scene ).sort( function ( a, b ) {
+
+				const distanceA = cache.objects.get( a ).distanceToCameraSquared;
+				const distanceB = cache.objects.get( b ).distanceToCameraSquared;
+
+				return distanceA - distanceB;
+
+			} );
+
+			const zMax = sorted.length;
+
+			for ( let i = 0, l = sorted.length; i < l; i ++ ) {
+
+				sorted[ i ].element.style.zIndex = zMax - i;
+
+			}
+
+		}
 
 	}
 
@@ -6699,6 +6910,7 @@ var _Group=function(){this._tweens={},this._tweensAddedDuringUpdate={}};_Group.p
 
 
 
+
 function vertexShader () {
   return `
   varying vec2 vUv;
@@ -6741,7 +6953,7 @@ const darkMaterial = new three_module/* MeshBasicMaterial */.vBJ({ color: 'black
 const tmpMaterials = {}
 
 let camera
-let bloomComposer, finalComposer, renderer, mixer, clock
+let bloomComposer, finalComposer, renderer, labelRenderer, mixer, clock
 let controls
 let model
 let mesh
@@ -6768,7 +6980,7 @@ function init () {
     1000
   )
 
-  camera.position.set(0, 1, 5)
+  camera.position.set(0, -0.2, 5)
   camera.lookAt(0, 0, 0)
   scene.add(camera)
 
@@ -6808,10 +7020,20 @@ function init () {
   finalComposer.addPass(finalPass)
 
   controls = new OrbitControls(camera, renderer.domElement)
-  controls.maxPolarAngle = Math.PI * 0.5
-  controls.minPolarAngle = Math.PI * 0.4
-  controls.maxAzimuthAngle = Math.PI * 0.1
-  controls.minAzimuthAngle = Math.PI * -0.1
+  // controls.maxPolarAngle = Math.PI * 0.5
+  // controls.minPolarAngle = Math.PI * 0.4
+  // controls.maxAzimuthAngle = Math.PI * 0.1
+  // controls.minAzimuthAngle = Math.PI * -0.1
+
+  // labelRenderer = new CSS2DRenderer();
+  labelRenderer = new CSS2DRenderer({
+    canvas: canvas,
+    antialias: true
+  })
+  labelRenderer.setSize(window.innerWidth, window.innerHeight)
+  labelRenderer.domElement.style.position = 'absolute'
+  labelRenderer.domElement.style.top = '0px'
+  // document.body.appendChild( labelRenderer.domElement );
 
   scene.add(new three_module/* AmbientLight */.Mig(0xf0f0f0))
 
@@ -6862,7 +7084,7 @@ function init () {
   // })
 
   const geometry = new three_module/* PlaneBufferGeometry */.BKK()
-  const material = new three_module/* MeshBasicMaterial */.vBJ({ side: three_module/* DoubleSide */.ehD })
+  const material = new three_module/* MeshBasicMaterial */.vBJ({ side: three_module/* DoubleSide */.ehD, transparent: true })
   mesh = new three_module/* Mesh */.Kj0(geometry, material)
 
   new three_module/* TextureLoader */.dpR().load(
@@ -6876,6 +7098,7 @@ function init () {
       mesh.scale.set(1, 1.5, 1)
       // mesh.rotation.set(-Math.PI / 2, 0, 0)
       mesh.position.set(0, -1.5, 1.5)
+      mesh.layers.enable(GLOW_LYR)
       scene.add(mesh)
     },
     undefined,
@@ -6884,6 +7107,14 @@ function init () {
     }
   )
 
+  const earthDiv = document.createElement('div')
+  earthDiv.className = 'label'
+  earthDiv.textContent = 'Earth'
+  earthDiv.style.marginTop = '-1em'
+  const earthLabel = new CSS2DObject(earthDiv)
+  earthLabel.position.set(0, 0.1, 0)
+  mesh.add(earthLabel)
+  earthLabel.layers.set(0)
   // const geometry = new THREE.BoxGeometry()
   // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
   // const cube = new THREE.Mesh(geometry, material)
@@ -6929,11 +7160,12 @@ function pageWarRoom () {
         model.scale.copy(current)
         model.position.y -= current.y * 0.0175
       })
-    // .onComplete(function () {
-    //   console.info('\nTWEEN.onComplete\n')
-    //   // camera.position.copy(controls.target).sub(direction)
-    //   controls.update()
-    // })
+      .onComplete(function () {
+        // console.info('\nTWEEN.onComplete\n')
+        // camera.position.copy(controls.target).sub(direction)
+        // controls.update()
+        model.visible = false
+      })
 
     tweenHead.start()
   }
@@ -6946,7 +7178,51 @@ function pageWarRoom () {
       // warRoomModel.scale.set(0.01, 0.01, 0.01)
       warRoomModel.scale.set(0.5, 0.5, 0.5)
       warRoomModel.position.set(0, -1.5, 0)
+      warRoomModel.receiveShadow = true;
       scene.add(warRoomModel)
+    }
+    // onProgress,  // not work for large GLTF
+    // onLoad       // triggered on start
+  )
+  loader.load(
+    // './VirtualWarRoom.glb',
+    // './Bangkok.gltf',
+    './XinyiDist_min.glb',
+    gltf => {
+      const cityModel = gltf.scene
+      // cityModel.scale.set(0.01, 0.01, 0.01)
+      // cityModel.scale.set(0.0005, 0.001, 0.001)
+      // cityModel.position.set(0, -1.4, 0)
+      cityModel.scale.set(0.0005, 0.003, 0.001)
+      cityModel.position.set(0, -1.0, 0)
+      cityModel.rotateY(Math.PI * 0.75)
+      scene.add(cityModel)
+      cityModel.children.forEach((elem, idx) => {
+        // elem.material=matSel
+        elem.layers.enable(GLOW_LYR)
+          // elem.material.wireframe = true
+          elem.material.transparent = true
+        if ('EXPORT_OSM_MAPNIK_WM002' === elem.name) {
+          // elem.material.wireframe = true
+          elem.material.opacity = 0.15
+        }
+        //  else if ('Areasbuilding' === elem.name) {
+        //   // elem.material.wireframe = true
+        //   elem.material.opacity = 0.1
+        // }
+        // console.info('name: ', elem.name)
+      })
+      // var cityModel2 = cityModel.clone()
+      // cityModel2.children.forEach((elem, idx) => {
+      //   // elem.material=matSel
+      //   // elem.layers.enable(GLOW_LYR)
+      //   // if ('EXPORT_OSM_MAPNIK_WM002' === elem.name) {
+      //     // elem.material.wireframe = true
+      //     // elem.material.transparent = true
+      //     // elem.material.opacity = 0.2
+      //   // }
+      // })
+      // scene.add(cityModel2)
     }
     // onProgress,  // not work for large GLTF
     // onLoad       // triggered on start
@@ -7039,6 +7315,10 @@ function navSlides () {
 }
 
 function darkenNonBloomed (obj) {
+  // console.info('name: ', obj.name)
+  if ('Areas:building' == obj.name) {
+    return
+  }
   if ('Tetrapod_real_logo_mat' == obj.name) {
     return
   }
@@ -7109,6 +7389,8 @@ function onWindowResize () {
   renderer.setSize(width, height)
   bloomComposer.setSize(width, height)
   finalComposer.setSize(width, height)
+
+  labelRenderer.setSize(width, height)
 }
 
 function animate () {
@@ -7125,6 +7407,8 @@ function animate () {
   scene.traverse(restoreMaterial)
 
   finalComposer.render()
+
+  labelRenderer.render(scene, camera)
 }
 
 
@@ -7133,6 +7417,6 @@ function animate () {
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__(629));
+/******/ var __webpack_exports__ = (__webpack_exec__(453));
 /******/ }
 ]);
