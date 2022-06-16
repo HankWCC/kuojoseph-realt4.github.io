@@ -6971,6 +6971,8 @@ function init () {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.toneMapping = three_module/* ReinhardToneMapping */.CdI
+  renderer.shadowMap.enabled = true
+  renderer.shadowMap.type = three_module/* PCFSoftShadowMap */.ntZ
   // document.body.appendChild(renderer.domElement)
 
   camera = new three_module/* PerspectiveCamera */.cPb(
@@ -7035,11 +7037,77 @@ function init () {
   labelRenderer.domElement.style.top = '0px'
   // document.body.appendChild( labelRenderer.domElement );
 
-  scene.add(new three_module/* AmbientLight */.Mig(0xf0f0f0))
+  scene.add(new three_module/* AmbientLight */.Mig(0xf0f0f0, 0.1))
 
-  const pointLight = new three_module/* PointLight */.cek(0xffffff, 1)
-  pointLight.position.set(0.5, -1, 3)
-  camera.add(pointLight)
+  // const pointLight = new THREE.PointLight(0xffffff, 1)
+  // pointLight.castShadow = true
+  // pointLight.shadow.bias = -0.005 // reduces self-shadowing on double-sided objects
+  // pointLight.position.set(0.5, -1, 3)
+  // camera.add(pointLight)
+
+  let mainLight
+  // https://threejs.org/docs/#api/en/lights/shadows/DirectionalLightShadow
+  // https://threejs.org/docs/#api/en/lights/shadows/LightShadow
+  mainLight = new three_module/* DirectionalLight */.Ox3(0xffffff, 2)
+  mainLight.position.set(1, 2, 0) //default; light shining from top
+  mainLight.castShadow = true // default false
+
+  mainLight.shadow.mapSize.width = 512 // default 512
+  mainLight.shadow.mapSize.height = 512 // default 512
+  mainLight.shadow.camera.near = 0.1 // default
+  mainLight.shadow.camera.far = 80 // default
+
+  mainLight.shadow.camera.left = -28
+  mainLight.shadow.camera.right = 28
+  mainLight.shadow.camera.top = 30
+  mainLight.shadow.camera.bottom = -20
+  mainLight.shadow.bias = -0.001
+  // mainLight.shadow.radius = 1
+  // mainLight.shadow.blurSamples = 100
+  mainLight.shadow.normalBias = -0.0005
+
+  // scene.add(mainLight)
+  mainLight.target.position.set(1, 0, 0)
+  // scene.add( mainLight.target );
+
+  // const helper = new THREE.CameraHelper(mainLight)
+  // scene.add(helper)
+  const helperShadow = new three_module/* CameraHelper */.Rki(mainLight.shadow.camera)
+  // scene.add(helperShadow)
+
+  let spotLightL, lightLHelper, shadowCameraLHelper
+  let spotLightR, lightRHelper, shadowCameraRHelper
+  spotLightL = new three_module/* SpotLight */.PMe(0xffffff, 1)
+  spotLightL.position.set(1.4, 2, 0)
+  spotLightL.angle = Math.PI / 4
+  spotLightL.penumbra = 0.1
+  spotLightL.decay = 0.2
+  spotLightL.distance = 7
+
+  spotLightL.castShadow = true
+  spotLightL.shadow.mapSize.width = 512
+  spotLightL.shadow.mapSize.height = 512
+  spotLightL.shadow.camera.near = 1
+  spotLightL.shadow.camera.far = 7
+  spotLightL.shadow.focus = 1
+  spotLightL.shadow.bias = -0.002
+  scene.add(spotLightL)
+
+  // lightLHelper = new THREE.SpotLightHelper(spotLightL)
+  // scene.add(lightLHelper)
+
+  // shadowCameraLHelper = new THREE.CameraHelper(spotLightL.shadow.camera)
+  // scene.add(shadowCameraLHelper)
+
+  spotLightR = spotLightL.clone()
+  spotLightR.position.set(-1.4, 2, 0)
+  scene.add(spotLightR)
+
+  // lightRHelper = new THREE.SpotLightHelper(spotLightR)
+  // scene.add(lightRHelper)
+
+  // shadowCameraRHelper = new THREE.CameraHelper(spotLightR.shadow.camera)
+  // scene.add(shadowCameraRHelper)
 
   const manager = new three_module/* LoadingManager */.lLk(/*loadModel*/)
 
@@ -7084,7 +7152,10 @@ function init () {
   // })
 
   const geometry = new three_module/* PlaneBufferGeometry */.BKK()
-  const material = new three_module/* MeshBasicMaterial */.vBJ({ side: three_module/* DoubleSide */.ehD, transparent: true })
+  const material = new three_module/* MeshBasicMaterial */.vBJ({
+    side: three_module/* DoubleSide */.ehD,
+    transparent: true
+  })
   mesh = new three_module/* Mesh */.Kj0(geometry, material)
 
   new three_module/* TextureLoader */.dpR().load(
@@ -7178,7 +7249,14 @@ function pageWarRoom () {
       // warRoomModel.scale.set(0.01, 0.01, 0.01)
       warRoomModel.scale.set(0.5, 0.5, 0.5)
       warRoomModel.position.set(0, -1.5, 0)
-      warRoomModel.receiveShadow = true;
+      // warRoomModel.castShadow  = true;
+      // warRoomModel.receiveShadow = true;
+      warRoomModel.traverse(function (child) {
+        if (child.isMesh) {
+          child.castShadow = true
+          child.receiveShadow = true
+        }
+      })
       scene.add(warRoomModel)
     }
     // onProgress,  // not work for large GLTF
@@ -7200,8 +7278,8 @@ function pageWarRoom () {
       cityModel.children.forEach((elem, idx) => {
         // elem.material=matSel
         elem.layers.enable(GLOW_LYR)
-          // elem.material.wireframe = true
-          elem.material.transparent = true
+        // elem.material.wireframe = true
+        elem.material.transparent = true
         if ('EXPORT_OSM_MAPNIK_WM002' === elem.name) {
           // elem.material.wireframe = true
           elem.material.opacity = 0.15
