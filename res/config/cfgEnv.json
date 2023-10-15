@@ -1,0 +1,133 @@
+{
+  "render": {
+    "fixWidth": -1,
+    "fixHeight": -1
+  },
+  "camControl": {
+    "camPos": [
+      0,
+      -5,
+      4
+    ],
+    "camLookAt": [
+      0,
+      0,
+      0
+    ],
+    "fov": 75,
+    "near": 0.1,
+    "far": 1000,
+    "maxPolarPi": 0.49,
+    "minDistance": 0.1,
+    "maxDistance": 1000
+  },
+  "bgColor": "#000000",
+  "fog": {
+    "color": "#000000",
+    "near": 600,
+    "far": 2000,
+    "density": 0.0005
+  },
+  "skybox": {
+    "size": 750,
+    "smooth": 30
+  },
+  "geos": [
+    {
+      "texture": "textures/mapBg.png",
+      "size": 4000,
+      "tiles": 400,
+      "opacity": 0.25,
+      "position": [
+        0,
+        0,
+        -30.5
+      ]
+    },
+    {
+      "texture": "textures/mapBg.png",
+      "size": 4000,
+      "tiles": 400,
+      "opacity": 0.5,
+      "position": [
+        0,
+        0,
+        -15.5
+      ]
+    },
+    {
+      "texture": "textures/mapBg.png",
+      "size": 4000,
+      "tiles": 400,
+      "opacity": 0.75,
+      "position": [
+        0,
+        0,
+        -0.5
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "type": "Ambient",
+      "color": "#e0e0e0",
+      "intensity": 2
+    },
+    {
+      "type": "Directional",
+      "color": "#ffffff",
+      "intensity": 10,
+      "position": [
+        200,
+        200,
+        200
+      ],
+      "shadow": {
+        "bias": -0.001,
+        "normalBias": -0.0005,
+        "mapW": 2048,
+        "mapH": 2048,
+        "cam": {
+          "near": 0.1,
+          "far": 800,
+          "left": -280,
+          "right": 280,
+          "top": 300,
+          "bottom": -200
+        }
+      }
+    },
+    {
+      "type": "Point",
+      "color": "#ffff00",
+      "intensity": 2500,
+      "position": [
+        50,
+        25,
+        10
+      ]
+    },
+    {
+      "type": "Spot",
+      "color": "#ff9933",
+      "intensity": 2500,
+      "position": [
+        80,
+        85,
+        50
+      ]
+    },
+    {
+      "type": "Spot",
+      "color": "#ff9933",
+      "intensity": 2500,
+      "position": [
+        20,
+        85,
+        50
+      ]
+    }
+  ],
+  "lightHelper": false,
+  "debugStat": false
+}

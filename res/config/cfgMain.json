@@ -1,0 +1,29 @@
+{
+  "API": {
+    "getInterval": 5000,
+    "getCamStatusIp": "./res/api/apiEventCam.json",
+    "getColumbaStatusIp": "./res/api/apiEventStatus.json",
+    "deviceStateSplitter": "|",
+    "deviceStateFmt": {
+      "devName": 0,
+      "devId": 1,
+      "widgetName": 2,
+      "widgetId": 3,
+      "value": 4,
+      "timestamp": 5
+    },
+    "zoomToEventFloor": false,
+    "showVideoAtEvent": false
+  },
+  "video": {
+    "endPoint": "LOCAL",
+    "RTSPtoWebServerAddr": "localhost:8083"
+  },
+  "urlParam": {
+    "floor": true
+  },
+  "project": {
+    "buildingConfig": "config/cfgBuilding.json",
+    "getObjLayout": "./res/api/apiObjLayout.json"
+  }
+}

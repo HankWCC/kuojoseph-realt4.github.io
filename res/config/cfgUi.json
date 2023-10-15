@@ -1,0 +1,92 @@
+{
+  "logo": {
+    "path": "rt4_logo_v.svg",
+    "width": "120px",
+    "height": "60px",
+    "glow": "0 0 4px #00ffff"
+  },
+  "panelHide": {
+    "policy": "auto",
+    "width": 799,
+    "height": 299
+  },
+  "panels": [
+    {
+      "id": "inspector",
+      "title": "Inspector",
+      "menu": false,
+      "align": "right",
+      "width": "200px",
+      "minHeight": "160px"
+    },
+    {
+      "id": "settings",
+      "title": "Settings",
+      "menu": true,
+      "align": "right",
+      "width": "200px",
+      "minHeight": "120px"
+    },
+    {
+      "id": "warningInfo",
+      "title": "Warning Info",
+      "menu": false,
+      "align": "left",
+      "width": "200px",
+      "minHeight": "120px"
+    },
+    {
+      "id": "warningHistory",
+      "title": "Warning History",
+      "menu": false,
+      "align": "left",
+      "width": "200px",
+      "minHeight": "80px"
+    },
+    {
+      "id": "sensorInfo",
+      "title": "Sensor Info",
+      "menu": false,
+      "align": "left",
+      "width": "200px",
+      "minHeight": "120px"
+    }
+  ],
+  "settings": [
+    {
+      "id": "btnPlay",
+      "title": "",
+      "icon": "fa-solid fa-circle-play",
+      "iconToggle": "fa-solid fa-circle-pause",
+      "style": "icon"
+    },
+    {
+      "id": "btnLod",
+      "title": "",
+      "icon": "fa-solid fa-eye",
+      "iconToggle": "fa-solid fa-eye-slash",
+      "style": "icon"
+    },
+    {
+      "id": "btnSplV",
+      "title": "",
+      "icon": "fa-solid fa-layer-group",
+      "iconToggle": "fa-solid fa-cube",
+      "style": "icon"
+    },
+    {
+      "id": "btnShadow",
+      "title": "",
+      "icon": "fa-solid fa-sun",
+      "iconToggle": "fa-solid fa-cloud-moon",
+      "style": "icon"
+    },
+    {
+      "id": "btnHome",
+      "title": "",
+      "icon": "fa-solid fa-house",
+      "iconToggle": "fa-solid fa-house",
+      "style": "icon"
+    }
+  ]
+}

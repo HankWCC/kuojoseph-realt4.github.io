@@ -1,0 +1,295 @@
+[
+  {
+    "id": "area_0",
+    "type": "area",
+    "name": "Main Area",
+    "enable": true,
+    "objId": "",
+    "buildings": [
+      {
+        "id": "building_0",
+        "type": "building",
+        "name": "Main Building",
+        "enable": true,
+        "objId": "building_0",
+        "floors": [
+          {
+            "id": "0_0_floor_Surround",
+            "type": "floor",
+            "name": "Surround",
+            "index": 0,
+            "height": 5.3,
+            "enable": true,
+            "objId": "Ground",
+            "zones": [
+              {
+                "id": "0_0_zone_Surround_0",
+                "type": "zone",
+                "name": "Fence Zone",
+                "enable": true,
+                "objId": "",
+                "devices": [
+                  {
+                    "id": "a45612de-9b71-9b19-bea5-f701928c7645",
+                    "type": "ipCam",
+                    "name": "Fence Zone Cam A",
+                    "enable": true,
+                    "objId": "ipCamMd0",
+                    "label": false,
+                    "transform": {
+                      "rotate": [
+                        0,
+                        0,
+                        45
+                      ],
+                      "translate": [
+                        25,
+                        0,
+                        4
+                      ]
+                    }
+                  },
+                  {
+                    "id": "629f0447-a235-a388-4640-340f803722bf",
+                    "type": "ipCam",
+                    "name": "Fence Zone Cam B",
+                    "enable": true,
+                    "objId": "ipCamMd0",
+                    "label": false,
+                    "transform": {
+                      "rotate": [
+                        0,
+                        0,
+                        135
+                      ],
+                      "translate": [
+                        75,
+                        0,
+                        4
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "0_0_floor_1F",
+            "type": "floor",
+            "name": "1F",
+            "index": 1,
+            "height": 5.3,
+            "enable": true,
+            "objId": "F1",
+            "zones": [
+              {
+                "id": "0_0_zone_1F_0",
+                "type": "zone",
+                "name": "Entry Zone",
+                "enable": true,
+                "objId": "",
+                "devices": [
+                  {
+                    "id": "2d01e314-3374-307c-cd8d-75bc165d6776",
+                    "type": "ipCam",
+                    "name": "Entry Zone Cam A",
+                    "enable": true,
+                    "objId": "ipCamMd0",
+                    "label": false,
+                    "transform": {
+                      "rotate": [
+                        0,
+                        0,
+                        120
+                      ],
+                      "translate": [
+                        45,
+                        70,
+                        4
+                      ]
+                    }
+                  },
+                  {
+                    "id": "f0902634-f763-45d7-0e14-7d3700a62153",
+                    "type": "ipCam",
+                    "name": "Entry Zone Cam B",
+                    "enable": true,
+                    "objId": "ipCamMd0",
+                    "label": false,
+                    "transform": {
+                      "rotate": [
+                        0,
+                        0,
+                        90
+                      ],
+                      "translate": [
+                        50,
+                        30,
+                        4
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "0_0_zone_1F_1",
+                "type": "zone",
+                "name": "Equipment Zone",
+                "enable": true,
+                "objId": "",
+                "devices": []
+              }
+            ]
+          },
+          {
+            "id": "0_0_floor_2F",
+            "type": "floor",
+            "name": "2F",
+            "index": 2,
+            "height": 5.3,
+            "enable": true,
+            "objId": "F2",
+            "zones": [
+              {
+                "id": "0_0_zone_2F_0",
+                "type": "zone",
+                "name": "Fabrication Zone",
+                "enable": true,
+                "objId": "",
+                "devices": [
+                  {
+                    "id": "1e56b4c0-1f95-1673-b940-64a37f3f2c20",
+                    "type": "ipCam",
+                    "name": "Fabrication Zone Cam A",
+                    "enable": true,
+                    "objId": "ipCamMd0",
+                    "label": false,
+                    "transform": {
+                      "rotate": [
+                        0,
+                        0,
+                        -135
+                      ],
+                      "translate": [
+                        45,
+                        50,
+                        9.3
+                      ]
+                    }
+                  },
+                  {
+                    "id": "9ee81f4b-52cb-f6f9-fe6d-504943f5e0a7",
+                    "type": "ipCam",
+                    "name": "Fabrication Zone Cam B",
+                    "enable": true,
+                    "objId": "ipCamMd0",
+                    "label": false,
+                    "transform": {
+                      "rotate": [
+                        0,
+                        0,
+                        315
+                      ],
+                      "translate": [
+                        55,
+                        50,
+                        9.3
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "0_0_zone_2F_1",
+                "type": "zone",
+                "name": "Operation Zone",
+                "enable": true,
+                "objId": "",
+                "devices": [
+                  {
+                    "id": "7a90ece9-71f2-53b6-491b-1ef941266a1a",
+                    "type": "ipCam",
+                    "name": "Operation Zone Cam",
+                    "enable": true,
+                    "objId": "ipCamMd0",
+                    "label": false,
+                    "transform": {
+                      "rotate": [
+                        0,
+                        0,
+                        1
+                      ],
+                      "translate": [
+                        65,
+                        40,
+                        9.3
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "0_0_floor_3F",
+            "type": "floor",
+            "name": "3F",
+            "index": 3,
+            "height": 5.3,
+            "enable": true,
+            "objId": "F3",
+            "zones": [
+              {
+                "id": "0_0_zone_3F_0",
+                "type": "zone",
+                "name": "Recreation Zone",
+                "enable": true,
+                "objId": "",
+                "devices": [
+                  {
+                    "id": "00332e29-4599-07fc-e671-7bad8c088b13",
+                    "type": "ipCam",
+                    "name": "Recreation Zone Cam",
+                    "enable": true,
+                    "objId": "ipCamMd0",
+                    "label": false,
+                    "transform": {
+                      "rotate": [
+                        0,
+                        0,
+                        180
+                      ],
+                      "translate": [
+                        45,
+                        60,
+                        14.6
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "0_0_floor_4F",
+            "type": "floor",
+            "name": "4F",
+            "index": 4,
+            "height": 5.3,
+            "enable": true,
+            "objId": "F4"
+          },
+          {
+            "id": "0_0_floor_Roof",
+            "type": "floor",
+            "name": "Roof",
+            "index": 5,
+            "height": 5.3,
+            "enable": true,
+            "objId": "Roof"
+          }
+        ]
+      }
+    ]
+  }
+]

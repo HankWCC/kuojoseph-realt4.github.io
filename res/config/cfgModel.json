@@ -1,0 +1,34 @@
+[
+  {
+    "id": "ipCamMd0",
+    "type": "ipCam",
+    "name": "IP Camera",
+    "enable": true,
+    "fileName": "cam",
+    "fileType": "glb",
+    "transform": {
+      "scale": [
+        4,
+        4,
+        4
+      ],
+      "rotate": [
+        0,
+        30,
+        0
+      ],
+      "translate": [
+        0,
+        0,
+        0
+      ]
+    },
+    "advSettings": {
+      "enable": true,
+      "color": "green",
+      "castShadow": true,
+      "receiveShadow": true,
+      "doubleSide": false
+    }
+  }
+]

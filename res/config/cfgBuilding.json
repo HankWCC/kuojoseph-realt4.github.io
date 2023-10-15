@@ -1,0 +1,85 @@
+[
+  {
+    "id": "building_0",
+    "name": "A0B0",
+    "fileName": "A0B0",
+    "fileType": "fbx",
+    "transform": {
+      "scale": [
+        0.01,
+        0.01,
+        0.01
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "translate": [
+        0,
+        0,
+        0
+      ]
+    },
+    "advSettings": {
+      "enable": true,
+      "castShadow": true,
+      "receiveShadow": true,
+      "doubleSide": false
+    },
+    "floor": {
+      "startIndex": -1,
+      "names": [
+        {
+          "name": "B1",
+          "objId": "B1"
+        },
+        {
+          "name": "Surround",
+          "objId": "Ground"
+        },
+        {
+          "name": "1F",
+          "objId": "F1"
+        },
+        {
+          "name": "2F",
+          "objId": "F2"
+        },
+        {
+          "name": "3F",
+          "objId": "F3"
+        },
+        {
+          "name": "4F",
+          "objId": "F4"
+        },
+        {
+          "name": "5F",
+          "objId": "F5"
+        },
+        {
+          "name": "Roof",
+          "objId": "Roof"
+        }
+      ],
+      "globalObjId": "Global",
+      "defaultHeight": 5.3,
+      "splitRatio": 5.7,
+      "specialCase": ""
+    },
+    "camControl": {
+      "camPos": [
+        -4,
+        -3,
+        2
+      ],
+      "camLookAt": [
+        0,
+        0,
+        0
+      ]
+    },
+    "affiliate": []
+  }
+]
